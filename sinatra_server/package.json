@@ -1,0 +1,14 @@
+{
+  "name": "sinatra_server",
+  "version": "1.0.0",
+  "description": "Sinatra json server",
+  "main": "app.rb",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Jules Roadknight",
+  "license": "ISC",
+  "devDependencies": {
+    "cypress": "^7.7.0"
+  }
+}
