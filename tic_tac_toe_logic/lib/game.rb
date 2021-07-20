@@ -7,8 +7,8 @@ class Game
     @turn_count = 1
   end
 
-  def submit_move(position, marker)
-    @board.mark(position, marker)
+  def submit_move(position)
+    @board.mark(position, current_player)
     @turn_count += 1
   end
 
