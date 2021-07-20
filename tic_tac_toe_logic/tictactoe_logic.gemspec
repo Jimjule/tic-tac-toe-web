@@ -6,7 +6,7 @@ Gem::Specification.new do |spec|
   spec.authors = ['Jules Roadknight']
   spec.email = 'roadknightj@gmail.com'
   spec.files = [
-    './lib/board.rb', './spec/board_spec.rb', 
+    './lib/board.rb'
   ]
   spec.homepage = 'https://rubygems.org/gems/tictactoe_logic'
   spec.license = 'MIT'
