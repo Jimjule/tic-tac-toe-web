@@ -13,7 +13,7 @@ class Board
   end
 
   def check_victory(marker)
-    check_row_loop(marker)
+    check_row_loop(marker) || check_column_loop(marker)
   end
 
   private
@@ -31,11 +31,18 @@ class Board
   def check_row_loop(marker)
     result = false
     board_rows = @board_state.each_slice(@board_length).to_a
-    0.upto(@board_length - 1) { |i| result = true if check_row(marker, board_rows[i]) }
+    0.upto(@board_length - 1) { |i| result = true if check_slice(marker, board_rows[i]) }
     result
   end
 
-  def check_row(marker, row)
+  def check_column_loop(marker)
+    result = false
+    board_columns = view.group_by.with_index{|_, k| k % @board_length}.values
+    0.upto(@board_length - 1) { |l| result = true if check_slice(marker, board_columns[l]) }
+    result
+  end
+
+  def check_slice(marker, row)
     matches = 0
     0.upto(@board_length - 1) { |j| matches += 1 if row[j] == marker }
     matches == @board_length
