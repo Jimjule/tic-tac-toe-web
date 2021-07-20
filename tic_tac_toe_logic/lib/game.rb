@@ -8,8 +8,8 @@ class Game
   end
 
   def submit_move(position)
-    @board.mark(position, current_player)
-    @turn_count += 1
+    @board.mark(position, current_player) if !ended?
+    @turn_count += 1 if !ended?
   end
 
   def view_board
@@ -18,5 +18,13 @@ class Game
 
   def current_player
     @turn_count % 2 == 0 ? @player_two_marker : @player_one_marker
+  end
+
+  def ended?
+    victory? || @turn_count >= board.size
+  end
+
+  def victory?
+    @board.check_victory(current_player)
   end
 end

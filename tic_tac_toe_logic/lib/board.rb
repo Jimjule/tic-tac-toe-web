@@ -16,6 +16,10 @@ class Board
     check_row_loop(marker) || check_column_loop(marker) || check_diagonal(marker)
   end
 
+  def size
+    @board_length * @board_length
+  end
+
   private
 
   def create_board(board_length)

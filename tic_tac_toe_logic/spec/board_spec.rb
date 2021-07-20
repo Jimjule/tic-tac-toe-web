@@ -12,6 +12,11 @@ describe Board do
     expect(board.view).to eq(['X', 2, 3, 4, 5, 6, 7, 8, 9])
   end
 
+  it 'Returns the board size' do
+    board = Board.new(3)
+    expect(board.size).to eq(9)
+  end
+
   it 'Can check for victory' do
     board = Board.new(3)
     expect(board.check_victory('X')).to eq(false)
