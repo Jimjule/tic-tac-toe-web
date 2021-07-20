@@ -13,7 +13,7 @@ class Board
   end
 
   def check_victory(marker)
-    check_row_loop(marker) || check_column_loop(marker)
+    check_row_loop(marker) || check_column_loop(marker) || check_diagonal(marker)
   end
 
   private
@@ -46,5 +46,11 @@ class Board
     matches = 0
     0.upto(@board_length - 1) { |j| matches += 1 if row[j] == marker }
     matches == @board_length
+  end
+
+  def check_diagonal(marker)
+    @board_length == 3 && view[0] == marker && view[4] == marker && view[8] == marker||
+    @board_length == 3 && view[2] == marker && view[4] == marker && view[6] == marker ?
+    true : false
   end
 end
