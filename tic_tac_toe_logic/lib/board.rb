@@ -29,8 +29,8 @@ class Board
   end
 
   def check_row_loop(marker)
-    board_rows = @board_state.each_slice(@board_length).to_a
     result = false
+    board_rows = @board_state.each_slice(@board_length).to_a
     0.upto(@board_length - 1) { |i| result = true if check_row(marker, board_rows[i]) }
     result
   end
