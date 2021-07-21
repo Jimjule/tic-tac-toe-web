@@ -4,4 +4,10 @@ source "https://rubygems.org"
 
 git_source(:github) {|repo_name| "https://github.com/#{repo_name}" }
 
+gem 'rspec'
+gem 'shotgun'
+gem 'sinatra'
+gem 'sinatra-contrib'
+gem "sinatra-cross_origin", "~> 0.3.1"
 gem 'sidekiq'
+gem 'tictactoe_logic'
