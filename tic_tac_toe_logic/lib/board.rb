@@ -1,4 +1,5 @@
-class Board 
+class Board
+  attr_reader :board_length
   def initialize(board_length)
     @board_length = board_length
     @board_state = create_board(board_length)

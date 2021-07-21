@@ -1,6 +1,6 @@
 Gem::Specification.new do |spec|
   spec.name = 'tictactoe_logic'
-  spec.version = '1.0.1'
+  spec.version = '1.1.1'
   spec.summary = 'The logic for a TicTacToe game'
   spec.description = 'The logic for a TicTacToe game'
   spec.authors = ['Jules Roadknight']

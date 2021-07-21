@@ -16,6 +16,10 @@ class Game
     @board.view
   end
 
+  def format_board
+    @board.view.each_slice(board.board_length).to_a
+  end
+
   def current_player
     @turn_count % 2 == 0 ? @player_two_marker : @player_one_marker
   end
