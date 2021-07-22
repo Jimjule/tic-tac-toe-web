@@ -17,10 +17,11 @@ describe('Setting up a game', () => {
 
   it('Can make a move', () => {
     cy.request('localhost:4567/game_setup')
-    cy.request('POST', 'localhost:4567/make_move', {'playerMove': 1}).then((response) => {
-      expect(response.body.game_over).to.eq(true)
-      expect(response.body.victory).to.eq(true)
-      expect(response.body.current_player).to.eq('X')
+    cy.request('POST', 'localhost:4567/make_move', {'playerMove': 5}).then((response) => {
+      expect(response.body.board).to.deep.eq([[1, 2, 3], [4, 'X', 6], [7, 8, 9]])
+      expect(response.body.game_over).to.eq(false)
+      expect(response.body.victory).to.eq(false)
+      expect(response.body.current_player).to.eq('O')
     })
   })
 
