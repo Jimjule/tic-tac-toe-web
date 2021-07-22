@@ -1,4 +1,4 @@
-describe('Setting up a game', () => {
+describe('Playing a game', () => {
   it('Checks the system health', () => {
     cy.request('localhost:4567/health_check').then((response) => {
       expect(response.status).to.eq(200)
@@ -18,6 +18,7 @@ describe('Setting up a game', () => {
   it('Can make a move', () => {
     cy.request('localhost:4567/game_setup')
     cy.request('POST', 'localhost:4567/make_move', {'playerMove': 5}).then((response) => {
+      expect(response.status).to.eq(200)
       expect(response.body.board).to.deep.eq([[1, 2, 3], [4, 'X', 6], [7, 8, 9]])
       expect(response.body.game_over).to.eq(false)
       expect(response.body.victory).to.eq(false)
@@ -32,6 +33,7 @@ describe('Setting up a game', () => {
     cy.request('POST', 'localhost:4567/make_move', {'playerMove': 2})
     cy.request('POST', 'localhost:4567/make_move', {'playerMove': 5})
     cy.request('POST', 'localhost:4567/make_move', {'playerMove': 3}).then((response) => {
+      expect(response.status).to.eq(200)
       expect(response.body.board).to.deep.eq([['X', 'X', 'X'], ['O', 'O', 6], [7, 8, 9]])
       expect(response.body.game_over).to.eq(true)
       expect(response.body.victory).to.eq(true)
