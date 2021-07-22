@@ -12,3 +12,6 @@ Navigate to http://localhost:4567
 # Testing
 - Cypress: `npx cypress open`
 - RSpec: `rspec`
+
+# Todo
+- Set dynamic session secret
