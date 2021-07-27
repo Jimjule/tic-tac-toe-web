@@ -4,6 +4,7 @@ source "https://rubygems.org"
 
 git_source(:github) {|repo_name| "https://github.com/#{repo_name}" }
 
+gem 'mongoid', '~> 7.0'
 gem 'rspec'
 gem 'shotgun'
 gem 'sinatra'
