@@ -121,6 +121,7 @@ get '/test_game_o_wins' do
   game.submit_move(5)
   game.submit_move(4)
   game.submit_move(player_move)
+  AddGameWorker.new.perform(collection, { board: game.format_board }) if game.ended?
     json :board => game.format_board,
     :game_over => game.ended?,
     :victory => game.victory?,
