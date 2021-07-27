@@ -91,6 +91,7 @@ end
 
 get '/test_game_x_wins' do
   player_move = params['player_move']
+  collection = client[:tictactoe_games]
 
   board = Board.new(3)
   @tictactoe_game = Game.new(board, 'X', 'O')
@@ -110,6 +111,7 @@ end
 
 get '/test_game_o_wins' do
   player_move = params['player_move']
+  collection = client[:tictactoe_games]
 
   board = Board.new(3)
   @tictactoe_game = Game.new(board, 'X', 'O')
@@ -120,6 +122,30 @@ get '/test_game_o_wins' do
   game.submit_move(2)
   game.submit_move(5)
   game.submit_move(4)
+  game.submit_move(player_move)
+  AddGameWorker.new.perform(collection, { board: game.format_board }) if game.ended?
+    json :board => game.format_board,
+    :game_over => game.ended?,
+    :victory => game.victory?,
+    :current_player => game.current_player
+end
+
+get '/test_game_draw' do
+  player_move = params['player_move']
+  collection = client[:tictactoe_games]
+
+  board = Board.new(3)
+  @tictactoe_game = Game.new(board, 'X', 'O')
+  session[:tictactoe_game] = @tictactoe_game
+  game = session[:tictactoe_game]
+  game.submit_move(1)
+  game.submit_move(3)
+  game.submit_move(2)
+  game.submit_move(4)
+  game.submit_move(5)
+  game.submit_move(8)
+  game.submit_move(6)
+  game.submit_move(9)
   game.submit_move(player_move)
   AddGameWorker.new.perform(collection, { board: game.format_board }) if game.ended?
     json :board => game.format_board,
