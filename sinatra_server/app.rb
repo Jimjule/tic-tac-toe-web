@@ -11,6 +11,7 @@ require_relative 'workers/echo_worker'
 require_relative 'workers/get_games_worker'
 
 client = Mongo::Client.new([ '127.0.0.1:27017' ], :database => 'tictactoe')
+redis = Redis.current
 
 configure do
   enable :sessions unless test?
@@ -36,24 +37,26 @@ end
 get '/make_move' do
   player_move = params['player_move']
   collection = client[:tictactoe_games]
-  session[:tictactoe_game].submit_move(player_move)
-  AddGameWorker.new.perform(collection, { board: session[:tictactoe_game].format_board }) if session[:tictactoe_game].ended?
-  json :board => session[:tictactoe_game].format_board,
-    :game_over => session[:tictactoe_game].ended?,
-    :victory => session[:tictactoe_game].victory?,
-    :current_player => session[:tictactoe_game].current_player
+  game = session[:tictactoe_game]
+  game.submit_move(player_move)
+  AddGameWorker.new.perform(collection, { board: game.format_board }) if game.ended?
+  json :board => game.format_board,
+    :game_over => game.ended?,
+    :victory => game.victory?,
+    :current_player => game.current_player
 end
 
 post '/make_move' do
   data = JSON.parse request.body.read
   player_move = data['playerMove']
   collection = client[:tictactoe_games]
-  session[:tictactoe_game].submit_move(player_move)
-  AddGameWorker.new.perform(collection, { board: session[:tictactoe_game].format_board }) if session[:tictactoe_game].ended?
-  json :board => session[:tictactoe_game].format_board,
-    :game_over => session[:tictactoe_game].ended?,
-    :victory => session[:tictactoe_game].victory?,
-    :current_player => session[:tictactoe_game].current_player
+  game = session[:tictactoe_game]
+  game.submit_move(player_move)
+  AddGameWorker.new.perform(collection, { board: game.format_board }) if game.ended?
+  json :board => game.format_board,
+    :game_over => game.ended?,
+    :victory => game.victory?,
+    :current_player => game.current_player
 end
 
 get '/all_games' do
@@ -82,6 +85,47 @@ get '/sidekiq_test' do
   EchoWorker.new.perform(echo)
 end
 
+get '/redis_test' do
+  redis
+end
+
+get '/test_game_x_wins' do
+  player_move = params['player_move']
+
+  board = Board.new(3)
+  @tictactoe_game = Game.new(board, 'X', 'O')
+  session[:tictactoe_game] = @tictactoe_game
+  game = session[:tictactoe_game]
+  game.submit_move(3)
+  game.submit_move(6)
+  game.submit_move(2)
+  game.submit_move(5)
+  game.submit_move(player_move)
+  AddGameWorker.new.perform(collection, { board: game.format_board }) if game.ended?
+    json :board => game.format_board,
+    :game_over => game.ended?,
+    :victory => game.victory?,
+    :current_player => game.current_player
+end
+
+get '/test_game_o_wins' do
+  player_move = params['player_move']
+
+  board = Board.new(3)
+  @tictactoe_game = Game.new(board, 'X', 'O')
+  session[:tictactoe_game] = @tictactoe_game
+  game = session[:tictactoe_game]
+  game.submit_move(3)
+  game.submit_move(9)
+  game.submit_move(2)
+  game.submit_move(5)
+  game.submit_move(4)
+  game.submit_move(player_move)
+    json :board => game.format_board,
+    :game_over => game.ended?,
+    :victory => game.victory?,
+    :current_player => game.current_player
+end
 
 options "*" do
   response.headers["Access-Control-Allow-Methods"] = "HEAD,GET,PUT,POST,DELETE,OPTIONS"

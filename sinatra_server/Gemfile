@@ -11,4 +11,4 @@ gem 'sinatra'
 gem 'sinatra-contrib'
 gem "sinatra-cross_origin", "~> 0.3.1"
 gem 'sidekiq'
-gem 'tictactoe_logic'
+gem 'tictactoe_logic', "~> 1.2.1"
