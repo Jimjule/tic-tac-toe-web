@@ -16,8 +16,8 @@ describe('Playing a game', () => {
   })
 
   it('Can make a move', () => {
-    cy.request('localhost:4567/game_setup')
-    cy.request('POST', 'localhost:4567/make_move', {'playerMove': 5}).then((response) => {
+    cy.request('/game_setup')
+    cy.request('POST', '/make_move', {'playerMove': 5}).then((response) => {
       expect(response.status).to.eq(200)
       expect(response.body.board).to.deep.eq([[1, 2, 3], [4, 'X', 6], [7, 8, 9]])
       expect(response.body.game_over).to.eq(false)
@@ -28,16 +28,31 @@ describe('Playing a game', () => {
 
   it('Wins a game as X', () => {
     cy.request('localhost:4567/game_setup')
-    cy.request('POST', 'localhost:4567/make_move', {'playerMove': 1})
-    cy.request('POST', 'localhost:4567/make_move', {'playerMove': 4})
-    cy.request('POST', 'localhost:4567/make_move', {'playerMove': 2})
-    cy.request('POST', 'localhost:4567/make_move', {'playerMove': 5})
-    cy.request('POST', 'localhost:4567/make_move', {'playerMove': 3}).then((response) => {
+    cy.request('POST', '/make_move', {'playerMove': 1})
+    cy.request('POST', '/make_move', {'playerMove': 4})
+    cy.request('POST', '/make_move', {'playerMove': 2})
+    cy.request('POST', '/make_move', {'playerMove': 5})
+    cy.request('POST', '/make_move', {'playerMove': 3}).then((response) => {
       expect(response.status).to.eq(200)
       expect(response.body.board).to.deep.eq([['X', 'X', 'X'], ['O', 'O', 6], [7, 8, 9]])
       expect(response.body.game_over).to.eq(true)
       expect(response.body.victory).to.eq(true)
       expect(response.body.current_player).to.eq('X')
+    })
+
+    it('Wins a game as X with GET requests', () => {
+      cy.request('localhost:4567/game_setup')
+      cy.request('GET', '/make_move?player_move=1')
+      cy.request('GET', '/make_move?player_move=4')
+      cy.request('GET', '/make_move?player_move=2')
+      cy.request('GET', '/make_move?player_move=5')
+      cy.request('GET', '/make_move?player_move=3').then((response) => {
+        expect(response.status).to.eq(200)
+        expect(response.body.board).to.deep.eq([['X', 'X', 'X'], ['O', 'O', 6], [7, 8, 9]])
+        expect(response.body.game_over).to.eq(true)
+        expect(response.body.victory).to.eq(true)
+        expect(response.body.current_player).to.eq('X')
+      })
     })
   })
 })
