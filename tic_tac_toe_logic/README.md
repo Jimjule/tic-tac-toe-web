@@ -14,7 +14,7 @@ A 'Tic-Tac-Toe' Gem written in Ruby.
 
 # Building the Gem
 
-- In the project root
+- Update the version of tictactoe_logic.gemspec, using semantic versioning
 - Run `gem build tictactoe_logic.gemspec`
 - You should now have a file called `tictactoe_logic-X.X.X.gem`, replacing version numbers as appropriate, which you can install and require in a project
 
