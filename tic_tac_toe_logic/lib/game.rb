@@ -1,34 +1,39 @@
 class Game
-  attr_reader :board, :turn_count
-  def initialize(board, player_one_marker, player_two_marker)
-    @board = board
-    @player_one_marker = player_one_marker
-    @player_two_marker = player_two_marker
-    @turn_count = 1
+  def self.create_board(board_length = 3)
+    board = []
+    iterator = 0
+    (board_length * board_length).times do
+      iterator += 1
+      board.push iterator
+    end
+    board
+  end
+  
+  def self.submit_move(board, position)
+    Board.mark(board, position, self.current_player(board)) if !self.ended?(board)
   end
 
-  def submit_move(position)
-    @board.mark(position, current_player) if !ended?
-    @turn_count += 1 if !ended?
+  def self.format_board(board, board_size = 3)
+    board.each_slice(3).to_a
   end
 
-  def view_board
-    @board.view
+  def self.turn_count(board)
+    turns = 1 + board.count('X')+ board.count('O')
   end
 
-  def format_board
-    @board.view.each_slice(board.board_length).to_a
+  def self.current_player(board)
+    self.turn_count(board) % 2 == 0 ? 'O' : 'X'
   end
 
-  def current_player
-    @turn_count % 2 == 0 ? @player_two_marker : @player_one_marker
+  def self.last_player(board)
+    self.turn_count(board) % 2 == 0 ? 'X' : 'O'
   end
 
-  def ended?
-    victory? || @turn_count >= board.size
+  def self.ended?(board)
+    self.victory?(board) || self.turn_count(board) >= board.length
   end
 
-  def victory?
-    @board.check_victory(current_player)
+  def self.victory?(board)
+    Board.check_victory(board, self.last_player(board))
   end
 end
