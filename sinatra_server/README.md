@@ -12,7 +12,4 @@ Navigate to http://localhost:4567
 
 # Testing
 - Cypress: `npx cypress open`
-- RSpec: `rspec`
-
-# Todo
-- Set dynamic session secret
+- Can be manually tested on Postman or on a browser by visiting `localhost:4567`

@@ -1,7 +1,4 @@
-import { useMachine } from '@xstate/react';
-import { useEffect } from 'react';
 import { StateValue } from 'xstate';
-import { gameStatusMachine } from '../machines/gameStatusMachine';
 
 interface GameStatusProps {
   status: StateValue
