@@ -53,7 +53,6 @@ function App() {
   }
 
   function getUpdate(data: GameJSON) {
-    console.log(data)
     setBoard(data.board)
     if(currentGameStatus.value === 'Not Started') {
       sendGameStatus('START')
@@ -65,9 +64,6 @@ function App() {
   }
 
   function gameResult(victory: boolean, player: string) {
-    console.log(victory)
-    console.log(player);
-    
     if (victory && player === "O") return sendGameResult('OWIN')
     if (victory && player === "X") return sendGameResult('XWIN')
     if (!victory) return sendGameResult('DRAW')

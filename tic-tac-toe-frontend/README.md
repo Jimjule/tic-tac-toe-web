@@ -5,8 +5,8 @@ The web component of a Tictactoe application.
 # Testing
 
 - First, install with `yarn install`
-- For integration tests run `npx cypress open`
-- For component tests run `npx cypress open-ct`
+- For component & integration tests run `npx cypress open-ct`
+- For integration view run `npx cypress open`
 
 
 ## Available Scripts
