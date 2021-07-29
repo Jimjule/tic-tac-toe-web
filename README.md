@@ -28,6 +28,7 @@ A Tic-Tac-Toe game that runs on a webpage. Communicates with a JSON backend.
 ## Project Todos
 
 - REACT Unblock submitting moves to server - investigate sessions/cookies
+- REACT (When on Submit Move ticket) Add input validation
 - SERVER Add dynamic session secret
 - SERVER Use test db
 - SERVER Decouple database
