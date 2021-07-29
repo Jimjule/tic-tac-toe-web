@@ -2,56 +2,62 @@ require 'board'
 
 describe Board do
   it 'Can detect no row victory for a single move' do
-    board = Board.new(3)
-    board.mark(1, 'X')
-    expect(board.check_victory('X')).to eq(false)
+    board_size = 3
+    board = Game.create_board(3)
+    Board.mark(board, 1, 'X')
+    expect(Board.check_victory(board, 'X')).to eq(false)
   end
 
   it 'Can detect no row victory for a mixed line' do
-    board = Board.new(3)
+    board_size = 3
+    board = Game.create_board(board_size)
 
-    board.mark(1, 'X')
-    board.mark(2, 'O')
-    board.mark(3, 'X')
+    Board.mark(board, 1, 'X')
+    Board.mark(board, 2, 'O')
+    Board.mark(board, 3, 'X')
 
-    expect(board.check_victory('X')).to eq(false)
-    expect(board.check_victory('O')).to eq(false)
+    expect(Board.check_victory(board, 'X')).to eq(false)
+    expect(Board.check_victory(board, 'O')).to eq(false)
   end
 
   it 'Can detect a row victory' do
-    board = Board.new(3)
+    board_size = 3
+    board = Game.create_board(board_size)
 
-    board.mark(1, 'X')
-    board.mark('2', 'X')
-    board.mark(3, 'X')
+    Board.mark(board, 1, 'X')
+    Board.mark(board, '2', 'X')
+    Board.mark(board, '4', 'O')
+    Board.mark(board, 3, 'X')
 
-    expect(board.check_victory('X')).to eq(true)
+    expect(Board.check_victory(board, 'X')).to eq(true)
   end
 
   it 'Can detect a victory in the third row' do
-    board = Board.new(3)
+    board_size = 3
+    board = Game.create_board(board_size)
     
-    board.mark(9, 'X')
-    board.mark(8, 'X')
+    Board.mark(board, 9, 'X')
+    Board.mark(board, 8, 'X')
 
-    expect(board.check_victory('X')).to eq(false)
+    expect(Board.check_victory(board, 'X')).to eq(false)
 
-    board.mark(7, 'X')
+    Board.mark(board, 7, 'X')
 
-    expect(board.check_victory('X')).to eq(true)
+    expect(Board.check_victory(board, 'X')).to eq(true)
   end
 
   it 'Can detect a row victory on a 4x4 board' do
-    board = Board.new(4)
+    board_size = 4
+    board = Game.create_board(board_size)
 
-    board.mark(1, 'Y')
-    board.mark('2', 'Y')
-    board.mark(3, 'Y')
+    Board.mark(board, 1, 'Y')
+    Board.mark(board, '2', 'Y')
+    Board.mark(board, 3, 'Y')
 
-    expect(board.check_victory('Y')).to eq(false)
+    expect(Board.check_victory(board, 'Y')).to eq(false)
 
-    board.mark(4, 'Y')
+    Board.mark(board, 4, 'Y')
 
-    expect(board.check_victory('Y')).to eq(true)
+    expect(Board.check_victory(board, 'Y')).to eq(true)
   end
 end

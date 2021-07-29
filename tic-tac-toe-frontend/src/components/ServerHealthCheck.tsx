@@ -2,7 +2,7 @@ import { useMachine } from '@xstate/react';
 import { useEffect } from 'react';
 import { serverHealthCheckMachine } from '../machines/serverHealthCheckMachine';
 
-const GameStatus = () => {
+const ServerHealthCheck = () => {
   const [current, send] = useMachine(serverHealthCheckMachine);
 
   useEffect(() => {
@@ -26,4 +26,4 @@ const GameStatus = () => {
   )
 }
 
-export default GameStatus;
+export default ServerHealthCheck;

@@ -2,49 +2,43 @@ require 'game'
 
 describe Game do
   it 'Can submit a move as the current player' do
-    board = Board.new(3)
-    game = Game.new(board, 'X', 'O')
-    game.submit_move('1')
-    game.submit_move('9')
-    expect(game.view_board).to eq(['X', 2, 3, 4, 5, 6, 7, 8, 'O'])
+    board = Game.create_board
+    Game.submit_move(board, '1')
+    expect(Game.submit_move(board, '9')).to eq(['X', 2, 3, 4, 5, 6, 7, 8, 'O'])
+    expect(Game.current_player(board)).to eq('X')
   end
 
   it 'Tracks the turn count' do
-    board = Board.new(3)
-    game = Game.new(board, 'X', 'O')
-    expect(game.turn_count).to eq(1)
+    board = Game.create_board
+    expect(Game.turn_count(board)).to eq(1)
   end
 
   it 'Tracks changes in the turn count' do
-    board = Board.new(3)
-    game = Game.new(board, 'X', 'O')
-    game.submit_move('1')
-    game.submit_move('2')
-    expect(game.turn_count).to eq(3)
+    board = Game.create_board
+    Game.submit_move(board, '1')
+    Game.submit_move(board, '2')
+    expect(Game.turn_count(board)).to eq(3)
   end
 
   it 'Tracks the current player' do
-    board = Board.new(3)
-    game = Game.new(board, 'X', 'O')
-    expect(game.current_player).to eq('X')
+    board = Game.create_board
+    expect(Game.current_player(board)).to eq('X')
   end
 
   it 'Tracks changes to the current player' do
-    board = Board.new(3)
-    game = Game.new(board, 'X', 'O')
-    game.submit_move('1')
-    expect(game.current_player).to eq('O')
+    board = Game.create_board
+    board = Game.submit_move(board, '1')
+    expect(Game.current_player(board)).to eq('O')
   end
 
   it 'Knows that the game is not over' do
-    board = Board.new(3)
-    game = Game.new(board, 'X', 'O')
-    expect(game.ended?).to eq(false)
+    board = Game.create_board
+    turn_count = Game.turn_count(board)
+    expect(Game.ended?(board)).to eq(false)
   end
 
   it 'Displays a split board' do
-    board = Board.new(3)
-    game = Game.new(board, 'X', 'O')
-    expect(game.format_board).to eq([[1, 2, 3], [4, 5, 6], [7, 8, 9]])
+    board = Game.create_board
+    expect(Game.format_board(board)).to eq([[1, 2, 3], [4, 5, 6], [7, 8, 9]])
   end
 end
