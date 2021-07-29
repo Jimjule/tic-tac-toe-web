@@ -7,7 +7,7 @@ A Tic-Tac-Toe game that runs on a webpage. Communicates with a JSON backend.
 - Download to your target folder
 - In `tic-tac-toe-frontend`, run `yarn install`
 - In `tic_tac_toe_logic`, run `bundle install`
-- In `sinatra_server`, run `npm install` and `bundle install`
+- In `sinatra_server`, run `gem install tictactoe_logic-1.2.1.gem`, `npm install` and `bundle install`
 
 ## Starting the Server
 
