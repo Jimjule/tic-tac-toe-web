@@ -2,9 +2,11 @@ import { createMachine } from 'xstate';
 
 type GameStatusEvents = 
 | { type: 'FINISH' }
-| { type: 'RESTART' }
+| { type: 'START' }
+| { type: 'MENU' }
 
 type GameStatusStates =
+  | { value: 'Not Started'; context: GameStatusContext}
   | { value: 'In Progress'; context: GameStatusContext }
   | { value: 'Game Over'; context: GameStatusContext };
 
@@ -17,15 +19,26 @@ export const gameStatusMachine = createMachine<
   GameStatusEvents,
   GameStatusStates
 >({
-  id: 'player',
-  initial: 'In Progress',
+  id: 'status',
+  initial: 'Not Started',
   context: undefined,
   states: {
+    'Not Started': {
+      on: {
+        START: 'In Progress'
+      }
+    },
     'In Progress': {
-      on: { FINISH: 'Game Over' }
+      on: {
+        FINISH: 'Game Over',
+        MENU: 'Not Started'
+      },
     },
     'Game Over': {
-      on: { RESTART: 'In Progress' }
+      on: {
+        START: 'In Progress',
+        MENU: 'Not Started'
+      }
     }
   }
 });
