@@ -2,7 +2,7 @@
 
 The early focus on this project was getting a walking skeleton going, with the frontend app, the server, and the database communicating. With this in mind, a Ruby Gem containing the game logic and a Sinatra server with a couple of routes were prioritised. The React app and the Mongo database were designed around these routes, and a lot of functionality could be tested on the server alone.
 
-Cypress was a strong choice for testing on this project as there was a significant amount of early integration testing, and recent updates make it a strong choice for component testing on React too.
+Cypress was a strong choice for testing on this project as there was a significant amount of early integration testing, and recent updates make it a strong choice for component testing on React too. It also allows for future snapshot testing, which would be useful as the frontend develops.
 
 Once the React app could send requests to the server, I added the database. Mongo was the database of choice because the data being stored does not require a relational/SQL database, being simple board state.
 
