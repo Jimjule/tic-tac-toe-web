@@ -35,3 +35,4 @@ A Tic-Tac-Toe game that runs on a webpage. Communicates with a JSON backend.
 - SERVER Add ENV
 - LOGIC Replace hard-coded diagonal victory checks
 - LOGIC Investigate draw display issue
+- LOGIC Rewind repo to logic used in current Gem (1.2.1)
